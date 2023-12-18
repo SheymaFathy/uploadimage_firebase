@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1045647209442",
+    "project_id": "uploadphoto-408312",
+    "storage_bucket": "uploadphoto-408312.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1045647209442:android:03e6c6ded062342d533fbb",
+        "android_client_info": {
+          "package_name": "com.example.firebase_task"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwb5zcj9ddatpc2ZDLBhknbiPPNNyvGyQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
