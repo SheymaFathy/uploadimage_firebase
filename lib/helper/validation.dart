@@ -21,4 +21,12 @@ class ValidatorDef {
     return null;
   }
 
+
+
+  static String? validatorImgName(val) {
+    if (val == null || val.isEmpty) {
+      return "Please write name of image";
+    }
+    return null;
+  }
 }

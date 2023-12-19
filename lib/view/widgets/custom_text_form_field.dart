@@ -38,4 +38,31 @@ class CustomTextFormField extends StatelessWidget {
       ],
     );
   }
+
 }
+
+Widget defaultform({
+  required TextEditingController controller,
+  required TextInputType type,
+  Function(String x)?onchange,
+  required String? Function(String?val)?validator,
+  required String label,
+  required IconData prefix,
+  VoidCallback? ontap,
+  bool isclickable=true,
+})=> TextFormField(
+  controller: controller,
+  decoration: InputDecoration(
+    prefixIcon: Icon(
+      prefix,
+    ),
+    labelText: label,
+    border: OutlineInputBorder(),
+  ),
+  validator: validator,
+  onTap: ontap,
+  keyboardType:type,
+  onChanged:onchange,
+  enabled: isclickable,
+
+);

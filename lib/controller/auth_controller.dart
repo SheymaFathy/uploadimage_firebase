@@ -1,66 +1,31 @@
-import 'package:firebase_task/constance.dart';
-import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_task/repositry/auth_repositry.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  Rx<User?> user = Rx<User?>(null);
+  static AuthController get instance => Get.find();
 
-  @override
-  void onInit() {
-    super.onInit();
-    user.bindStream(_auth.authStateChanges());
-  }
 
-  Future<dynamic>signIn(String email, String password) async {
-    try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-    } catch (e) {
-      Get.snackbar("Error", e.toString());
-    }
-  }
+final email = TextEditingController();
+final password = TextEditingController();
+final name = TextEditingController();
 
-Future<dynamic> signUp(String email ,String password)async{
-try {
- await _auth.createUserWithEmailAndPassword(
-    email: email,
-    password: password,
-  );
-} on FirebaseAuthException catch (e) {
-   if (e.code == 'email-already-in-use') {
-     Get.snackbar('Error', 'The account already exists for that email.',
-      colorText: primaryColor, snackPosition:SnackPosition.BOTTOM );
-  }
+ void registerUser(String email, String password){
+  AuthRepositry.instance.createUserWithEmailAndPassword(email,password);
+  
 }
+
+ void loginUser(String email, String password){
+  AuthRepositry.instance.signInWithEmailAndPassword(email,password);
+  
 }
 
 
-  Future<void> signOut() async {
-    try {
-      await _auth.signOut();
-    } catch (e) {
-      Get.snackbar("Error", e.toString());
-    }
-  }
 
 
-
-Future logInWithEmailAndPassword(
-  String email ,String password
-)async{
-
- try {
-   await _auth.signInWithEmailAndPassword(
-    email: email,
-    password: password
-  );
- } on FirebaseAuthException catch (e) {
-  if (e.code == 'user-not-found') {
-    Get.snackbar('Error', e.toString(), colorText: primaryColor, snackPosition:SnackPosition.BOTTOM );
-  } else if (e.code == 'wrong-password') {
-    Get.snackbar('Error', e.toString(), colorText: primaryColor, snackPosition:SnackPosition.BOTTOM );
-  }
-}
+void signout ()async{
+  await FirebaseAuth.instance.signOut();
 }
   
 }

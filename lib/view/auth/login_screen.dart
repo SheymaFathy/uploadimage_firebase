@@ -1,7 +1,6 @@
 import 'package:firebase_task/controller/auth_controller.dart';
 import 'package:firebase_task/helper/validation.dart';
 import 'package:firebase_task/view/auth/sign_up.dart';
-import 'package:firebase_task/view/screens/add_upload_img.dart';
 import 'package:firebase_task/view/widgets/custom_botton.dart';
 import 'package:firebase_task/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +10,8 @@ import '../widgets/custom_text_form_field.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
- AuthController authController = Get.put(AuthController());
+ AuthController controller = Get.put(AuthController());
  final formKey = GlobalKey<FormState>();
- TextEditingController email = TextEditingController();
- TextEditingController password = TextEditingController();
- 
   LoginScreen({super.key});
   @override
   Widget build(BuildContext context) {
@@ -57,7 +53,7 @@ class LoginScreen extends StatelessWidget {
                        validator: (val) {
                           return ValidatorDef.validatorEmail(val);
                         },
-                      controller: email,),
+                      controller: controller.email,),
                   const SizedBox(
                     height: 40,
                   ),
@@ -66,7 +62,8 @@ class LoginScreen extends StatelessWidget {
                       hint: '********',
                        validator: (val) {
                           return ValidatorDef.validatorPassword(val);
-                        }, controller: password,),
+                        }, controller: 
+                        controller.password,),
                   const SizedBox(
                     height: 50,
                   ),
@@ -75,10 +72,7 @@ class LoginScreen extends StatelessWidget {
                     onTab: () async{
 
                     if(formKey.currentState!.validate()){
-                        var signin = await authController.logInWithEmailAndPassword(
-                                email.text, password.text);
-                                signin == true ? Get.offAll(uploadImage()):Get.snackbar("خطأ",
-                                  "تم ادخال اسم المستخدم او كلمة المرور بشكل خاطئ");
+                     controller.loginUser(controller.email.text.trim(), controller.password.text.trim());
    
                           } 
                     },

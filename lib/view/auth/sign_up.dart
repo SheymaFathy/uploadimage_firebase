@@ -1,4 +1,5 @@
 import 'package:firebase_task/controller/auth_controller.dart';
+
 import 'package:firebase_task/helper/validation.dart';
 import 'package:firebase_task/view/auth/login_screen.dart';
 import 'package:firebase_task/view/widgets/custom_botton.dart';
@@ -10,12 +11,9 @@ import '../widgets/custom_text_form_field.dart';
 
 // ignore: must_be_immutable
 class SignUpScreen extends StatelessWidget {
- AuthController authController = Get.put(AuthController());
+ AuthController controller = Get.put(AuthController());
+
  final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
- TextEditingController name = TextEditingController();
- TextEditingController email = TextEditingController();
- TextEditingController password = TextEditingController();
- 
   SignUpScreen({super.key});
   @override
   Widget build(BuildContext context) {
@@ -55,7 +53,7 @@ class SignUpScreen extends StatelessWidget {
                      validator: (val) {
                           return ValidatorDef.validatorname(val);
                         },
-                   controller: name,),
+                   controller: controller.name,),
                   const SizedBox(height: 40,),
 
                   CustomTextFormField(
@@ -63,7 +61,7 @@ class SignUpScreen extends StatelessWidget {
                       hint: 'example@email.com',
                        validator: (val) {
                           return ValidatorDef.validatorEmail(val);
-                        }, controller: email,),
+                        }, controller: controller.email,),
                   const SizedBox(
                     height: 40,
                   ),
@@ -73,18 +71,16 @@ class SignUpScreen extends StatelessWidget {
                         validator: (val) {
                           return ValidatorDef.validatorPassword(val);
                         },
-                         controller: password,),
+                         controller: controller.password,),
                   const SizedBox(
                     height: 50,
                   ),
                   CustomBtn(
                     text: 'Sign Up',
                     onTab: () async{
-
-                        var signup = await authController.signUp(
-                                email.text, password.text);
-                                signup==true ? Get.offAll(LoginScreen()): Get.snackbar("Error",
-                                  "Somehing is wrong ");
+                      if(_globalKey.currentState!.validate()){
+                        AuthController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
+                      }
                     },
                   ),
                   const SizedBox(
